@@ -23,6 +23,7 @@ const reportSchema = new mongoose.Schema(
     generatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     generatedByName: String,
     fileSize: { type: String, default: '1.2 MB' },
+    relatedAssets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Asset' }],
     metrics: { type: mongoose.Schema.Types.Mixed, default: {} },
   },
   { timestamps: true },
