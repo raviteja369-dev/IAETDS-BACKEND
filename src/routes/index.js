@@ -5,6 +5,7 @@ import analyticsRoutes from './analytics.routes.js';
 import notificationRoutes from './notification.routes.js';
 import auditRoutes from './audit.routes.js';
 import assetRoutes from './asset.routes.js';
+import searchRoutes from './search.routes.js';
 import { resourceRouter } from './resourceRouter.js';
 
 import { Ticket } from '../models/Ticket.js';
@@ -24,6 +25,7 @@ apiRouter.use('/auth', authRoutes);
 apiRouter.use('/analytics', analyticsRoutes);
 apiRouter.use('/notifications', notificationRoutes);
 apiRouter.use('/audit-logs', auditRoutes);
+apiRouter.use('/search', searchRoutes);
 
 apiRouter.use('/assets', assetRoutes);
 
