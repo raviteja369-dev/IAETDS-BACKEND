@@ -20,6 +20,10 @@ export async function connectDB() {
   } catch (err) {
     // eslint-disable-next-line no-console
     console.warn(`[db] Primary MongoDB unavailable (${err.message}).`);
+    // The in-memory fallback only exists for local demos. In production
+    // (e.g. Railway) it cannot run (missing system libs) and would crash —
+    // so surface the real error instead of masking it.
+    if (env.isProd) throw err;
     return tryMemoryServer();
   }
 }
