@@ -8,9 +8,11 @@ async function bootstrap() {
   // healthy response and never returns a 502 — even if the database is slow or
   // misconfigured. DB connection + seeding happen in the background below.
   const app = createApp();
-  app.listen(env.port, () => {
+  // Bind to 0.0.0.0 so the app is reachable inside container platforms
+  // (Railway/Render/etc.), and always use the platform-injected PORT.
+  app.listen(env.port, '0.0.0.0', () => {
     // eslint-disable-next-line no-console
-    console.log(`\n  IAETDS API ready → http://localhost:${env.port}`);
+    console.log(`\n  IAETDS API ready → listening on 0.0.0.0:${env.port}`);
     console.log(`  Environment: ${env.nodeEnv}\n`);
   });
 
