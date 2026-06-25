@@ -17,9 +17,32 @@ export function createApp() {
   app.set('trust proxy', 1);
 
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+
+  // CLIENT_URL may be a single origin or a comma-separated allowlist.
+  const allowedOrigins = String(env.clientUrl || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   app.use(
     cors({
-      origin: env.clientUrl,
+      origin(origin, callback) {
+        // Allow non-browser requests (curl, health checks) that send no Origin.
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+        let hostname = '';
+        try {
+          hostname = new URL(origin).hostname;
+        } catch {
+          return callback(new Error(`Invalid origin: ${origin}`));
+        }
+        // Allow any Vercel preview/production deployment and local dev.
+        if (hostname.endsWith('.vercel.app')) return callback(null, true);
+        if (hostname === 'localhost' || hostname === '127.0.0.1') {
+          return callback(null, true);
+        }
+        return callback(new Error(`Not allowed by CORS: ${origin}`));
+      },
       credentials: true,
     }),
   );
