@@ -15,7 +15,7 @@ export const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   isProd: process.env.NODE_ENV === 'production',
   port: parseInt(process.env.PORT || '5050', 10),
-  mongoUri: required('MONGODB_URI', 'mongodb://127.0.0.1:27017/iaetds'),
+  mongoUri: required('MONGODB_URI', 'mongodb://127.0.0.1:27017/Iaetds'),
   jwt: {
     accessSecret: required('JWT_ACCESS_SECRET', 'dev_access_secret_change_me'),
     refreshSecret: required('JWT_REFRESH_SECRET', 'dev_refresh_secret_change_me'),
